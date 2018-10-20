@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    url(r'^$', views.FileListView.as_view(), name='file_list'),
+    url(r'^$', views.fileList, name='file_list'),
     url(r'^server/file/(?P<pk>\d+)$', views.FileDetailView.as_view(), name='file_detail'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^upload/', views.FileCreate.as_view(), name='upload_file'),

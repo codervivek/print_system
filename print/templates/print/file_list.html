@@ -35,16 +35,23 @@
                <div class="text-center"><h1>FILE LIST</h1><hr></div>
             {% if user.files.all %}
               <ul>
+              
                 {% for file in user.files.all %}
                   <li class="list-group-item d-flex justify-content-between">
-                    <a href="{{ file.get_absolute_url }}">{{ file.name }}</a>
+                    <a href="{{ file.get_absolute_url }}">{{ file.name }}({{ file.countPages }})</a>
                     {% if file.isPrinted %}
                     <span class="badge badge-primary badge-pill">Printed</span>
-                    {% else %}
+                          
+                   {% else %}
                     <span class="badge badge-primary badge-pill">NotPrinted</span>
                   </li>
                      {% endif %}
                 {% endfor %}
+                <li class="list-group-item d-flex justify-content-between">
+                  <div></div>
+                    <span class="">price = {{count}}</span>
+                 
+                  </li>
               </ul>
             {% else %}
                                                           <div align="center">

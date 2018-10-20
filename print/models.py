@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from PyPDF2 import PdfFileReader
 
 # Create your models here.
 class File(models.Model):
@@ -11,6 +12,7 @@ class File(models.Model):
     mainFile=models.FileField(upload_to='uploads/item/photos/', help_text="Upload a file", null=True)
 
     isPrinted=models.BooleanField(default=False)
+    noOfPages=models.IntegerField(default=0)
 
  
     
@@ -19,3 +21,7 @@ class File(models.Model):
     
     def get_absolute_url(self):
         return self.mainFile.url
+
+    def countPages(self):
+        pdf = PdfFileReader(open('./'+ self.mainFile.url,'rb'))
+        return pdf.getNumPages()
