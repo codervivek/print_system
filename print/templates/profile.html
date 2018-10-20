@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block title %}MY PROFILE{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col">
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-30">
+  
+<div align="center"><h1> Name:{{ user.username }}</h1></div>
+<div align="center"><h2> Email :{{ user.email }}</h2></div>
+
+    </div>
+    <div class="col">
+
+    </div>
+  </div>
+</div>
+  {% endblock content %}

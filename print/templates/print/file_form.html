@@ -1,0 +1,60 @@
+{% include "base.html" %}
+
+{% if user.is_authenticated %}
+{% block content %} 
+<div class="uk-flex-middle uk-container">
+<div class="uk-card uk-card-default">
+  <div class="uk-card-header">
+    <h1 class="uk-text-center">Upload detail</h1>
+  </div>
+  <div class="uk-card-body">
+      <form action="" method="post" enctype="multipart/form-data">
+          <div class="uk-form-group">
+          {% csrf_token %}
+          <!-- <table>
+            {{ form.as_table }}
+            </table><hr> -->
+            {% for field in form %}
+            {% if not field.help_text == "a" %}
+                <div class="form-group row">
+                    <div class="col-3">
+                      <p>{{ field.label_tag }}</p>
+                    </div> 
+                    <div class="col-5">{{ field }}</div> 
+                    {% if field.help_text %}<div class="form-helptext text-muted col-4">{{ field.help_text }}</div>{% endif %}
+                    {% if field.errors %}
+                    <div class="col-12">
+                        <br>
+                        <ul class="form-errors alert alert-danger">
+                        {% for error in field.errors %}
+                            <li><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}<hr>
+            {% endfor %}
+
+            <input name="user" type="hidden" value="{{user.id}}"/>
+          <div class="uk-text-center">
+          <input type="submit" value="Submit" class="uk-button uk-button-default"/></div>
+          </div>
+      </form>
+    
+  </div>
+</div> 
+</div>
+{% load staticfiles %}
+
+{% endblock %}
+
+{% block extra_js %}
+{% endblock extra_js %}    
+{% else %}
+      <div align="center">
+     <a class="navbar-brand" href="{% url 'login' %}"><i class="fas fa-exclamation-triangle"></i> Please login to your account to see your filename!</a>
+
+   </div>  
+{% endif %}
+

@@ -1,0 +1,69 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+<br>
+
+  {% if user.is_authenticated %}
+          
+          <ul class="list-group">
+            {% if user.is_staff %}
+              <div class="text-center"><h1>SERVER</h1><hr></div>
+              <ul>
+                {% for file in file_list %}
+                  <li class="list-group-item d-flex justify-content-between">
+                    
+                    {% if file.isPrinted %}
+                   
+
+                     <div>{{file.user}}'s file printed <a href="{{ file.get_absolute_url }}" >{{ file.name }}</a></div>
+                     <div>
+                      
+                     <span class="badge badge-primary badge-pill">Printed</span></div>
+                    {% else %}
+                    <div>{{file.user}} requested to print file <a href="{{ file.get_absolute_url }}">{{ file.name }}</a></div>
+                    <div>
+                    <button type="button" class="btn btn-secondary btn-sm" id="markPrinted" num={{file.id}} data-url="{% url 'mark' file.id %}">Mark this file as printed</button>
+                    <span class="badge badge-primary badge-pill" id="badge{{file.id}}">NotPrinted</span>
+                    </div>
+                  </li>
+                     {% endif %}
+                {% endfor %}
+              </ul>
+            {% else  %}
+               <div class="text-center"><h1>FILE LIST</h1><hr></div>
+            {% if user.files.all %}
+              <ul>
+                {% for file in user.files.all %}
+                  <li class="list-group-item d-flex justify-content-between">
+                    <a href="{{ file.get_absolute_url }}">{{ file.name }}</a>
+                    {% if file.isPrinted %}
+                    <span class="badge badge-primary badge-pill">Printed</span>
+                    {% else %}
+                    <span class="badge badge-primary badge-pill">NotPrinted</span>
+                  </li>
+                     {% endif %}
+                {% endfor %}
+              </ul>
+            {% else %}
+                                                          <div align="center">
+                                                          <i class="fas fa-trash-alt">There are no files in the database
+                                                            </i>
+
+                                                               
+                                                             </div>
+                                          {% endif %}
+                          {% endif %}
+      
+   {% else %}
+   <div align="center">
+     <a class="navbar-brand" href="{% url 'login' %}"><i class="fas fa-exclamation-triangle"></i> Please login to your account to see your filename!</a>
+   
+   </div>   
+  {% endif %}
+</div>
+
+{% endblock content %}
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script></script><script src="{% static 'js/file_list.js' %}"></script>{% endblock js %}
